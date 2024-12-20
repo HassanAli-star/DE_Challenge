@@ -31,6 +31,13 @@ Aim is to address following business questions using Postgres tables such as:
 
 ---
 
+## Prerequisites
+
+1. **Python**: Ensure Python 3.8+ is installed.
+2. **Docker**: Docker and Docker Compose should be installed to set up Airflow.
+
+---
+
 ## Features
 - **Data Extraction:** Reads data from MongoDb or JSON files.
 - **Data Transformation:** Applies transformation logic to normalize and clean data.
@@ -68,6 +75,38 @@ DE_Challenge/
 ├── requirements.txt              # Dependencies
 
 ```
+
+---
+
+## Configuration
+`config.yaml` defines:
+- **Schema Definitions:** SQL create table statements for each dataset.
+- **Postgres configurations** Configuration of destination postgres database.
+
+`column_mappings.yaml` defines:
+- **Column Selection:** List of column select from transformed dataframe.
+- **Column Mapping:** List of input column names and output column names.
+
+---
+
+## Setting Up the Airflow Environment
+
+Set up PostgreSQL and ensure the credentials are added in `config.yaml` according to the environment.
+
+1. **Clone the Repository**:
+   ```bash
+   git clone -b main /path/to/bundle.file </path/to/unbundle>
+   cd DE_Challenge
+   ```
+
+2. **Set Up Docker Environment**:
+   Build and run the Airflow environment using Docker Compose:
+   ```bash
+   docker-compose up -d
+   ```
+   
+---
+
 ### Schema Understanding
 - Examined the given MongoDB collections to understand their structure.
 - Visualized the relationships between collections and normalized the data into PostgreSQL tables using the Entity-Relationship Diagram (ERD).
@@ -90,41 +129,8 @@ DE_Challenge/
 
 3. **`suppliers` and `sonar_results`:**
    - Suppliers are referenced in `sonar_results` through `supplier_id`.
----
-
-## Prerequisites
-
-1. **Python**: Ensure Python 3.8+ is installed.
-2. **Docker**: Docker and Docker Compose should be installed to set up Airflow.
 
 ---
-
-## Configuration
-`config.yaml` defines:
-- **Schema Definitions:** SQL create table statements for each dataset.
-- **Postgres configurations** Configuration of destination postgres database.
-
-`column_mappings.yaml` defines:
-- **Column Selection:** List of column select from transformed dataframe.
-- **Column Mapping:** List of input column names and output column names.
-
----
-## Setting Up the Airflow Environment
-
-Set up PostgreSQL and ensure the credentials are added in `config.yaml` according to the environment.
-
-1. **Clone the Repository**:
-   ```bash
-   git clone -b main /path/to/bundle.file </path/to/unbundle>
-   cd DE_Challenge
-   ```
-
-2. **Set Up Docker Environment**:
-   Build and run the Airflow environment using Docker Compose:
-   ```bash
-   docker-compose up -d
-   ```
-   
 
 ## Running the ETL Pipeline Using Airflow
 
