@@ -25,6 +25,12 @@ Aim is to address following business questions using Postgres tables such as:
 
 ---
 
+## Pipeline Architecure
+
+  ![ERD Diagram](images/pipeline_arch.png)
+
+---
+
 ## Features
 - **Data Extraction:** Reads data from MongoDb or JSON files.
 - **Data Transformation:** Applies transformation logic to normalize and clean data.
