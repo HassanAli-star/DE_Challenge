@@ -27,7 +27,7 @@ Aim is to address following business questions using Postgres tables such as:
 
 ## Pipeline Architecure
 
-  ![ERD Diagram](images/pipeline_arch.png)
+  ![Data Pipeline Architecture Diagram](images/pipeline_arch.jpg)
 
 ---
 
