@@ -29,14 +29,6 @@ Aim is to address following business questions using Postgres tables such as:
 
   ![Data Pipeline Architecture Diagram](images/pipeline_arch.jpg)
 
----
-
-## Prerequisites
-
-1. **Python**: Ensure Python 3.8+ is installed.
-2. **Docker**: Docker and Docker Compose should be installed to set up Airflow.
-
----
 
 ## Features
 - **Data Extraction:** Reads data from MongoDb or JSON files.
@@ -47,6 +39,29 @@ Aim is to address following business questions using Postgres tables such as:
 - **Scalable Design:** Uses modular components and YAML configurations for schema definitions.
 
 ---
+
+## Prerequisites
+
+1. **Python**: Ensure Python 3.8+ is installed.
+2. **Docker**: Docker and Docker Compose should be installed to set up Airflow.
+
+---
+
+## Setting Up the Airflow Environment
+
+Set up PostgreSQL and ensure the credentials are added in `config.yaml` according to the environment.
+
+1. **Clone the Repository**:
+   ```bash
+   git clone -b main /path/to/bundle.file </path/to/unbundle>
+   cd DE_Challenge
+   ```
+
+2. **Set Up Docker Environment**:
+   Build and run the Airflow environment using Docker Compose:
+   ```bash
+   docker-compose up -d
+   ```
 
 ## Folder Structure
 ```plaintext
@@ -76,8 +91,6 @@ DE_Challenge/
 
 ```
 
----
-
 ## Configuration
 `config.yaml` defines:
 - **Schema Definitions:** SQL create table statements for each dataset.
@@ -87,24 +100,6 @@ DE_Challenge/
 - **Column Selection:** List of column select from transformed dataframe.
 - **Column Mapping:** List of input column names and output column names.
 
----
-
-## Setting Up the Airflow Environment
-
-Set up PostgreSQL and ensure the credentials are added in `config.yaml` according to the environment.
-
-1. **Clone the Repository**:
-   ```bash
-   git clone -b main /path/to/bundle.file </path/to/unbundle>
-   cd DE_Challenge
-   ```
-
-2. **Set Up Docker Environment**:
-   Build and run the Airflow environment using Docker Compose:
-   ```bash
-   docker-compose up -d
-   ```
-   
 ---
 
 ### Schema Understanding
@@ -156,7 +151,7 @@ Set up PostgreSQL and ensure the credentials are added in `config.yaml` accordin
    Use the **Graph View** or **Tree View** in the Airflow interface to monitor the status of each task in the DAG. For detailed logs, click on individual task instances.
    ![Airflow LOG's Page](images/airflow_logs_page.png)
    
----
+
 
 ## DAG Characteristics
 
@@ -264,5 +259,5 @@ This trend analysis enables stakeholders to identify patterns and anomalies in p
 ## Contributors
 - **Hassan Ali**: Designed and implemented the pipeline and unit testing framework.
 
----
+
 
