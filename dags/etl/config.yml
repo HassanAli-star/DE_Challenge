@@ -1,0 +1,103 @@
+DEV:
+  postgres:
+    host: "postgresdb"
+    port: 5432
+    database: "test_db"
+    user: "admin"
+    password: "root"
+    schema_name: "silver"
+  mongo:
+    uri: "mongodb+srv://username:password@cluster.mongodb.net/dbname"
+    
+PRD:
+  postgres:
+    host: "postgresdb"
+    port: 5432
+    database: "test_db"
+    user: "admin"
+    password: "root"
+    schema_name: "silver"
+  mongo:
+    uri: "mongodb+srv://username:password@cluster.mongodb.net/dbname"
+
+table_schemas:
+  clients: >
+    CREATE TABLE IF NOT EXISTS silver.clients (
+      client_id VARCHAR(24) PRIMARY KEY,
+      name TEXT,
+      contract_start_date TIMESTAMP,
+      contract_end_date TIMESTAMP,
+      sonar_dates TEXT[],
+      suppliers TEXT[]
+    );
+
+  supplier_group: >
+    CREATE TABLE IF NOT EXISTS silver.supplier_group (
+      PRIMARY KEY(supplier_id,client_id,group_name),
+      group_name VARCHAR(3),
+      supplier_id VARCHAR(24),
+      client_id VARCHAR(24),
+      FOREIGN KEY (client_id) REFERENCES silver.clients(client_id)
+    );
+
+
+  suppliers: >
+    CREATE TABLE IF NOT EXISTS silver.suppliers (
+      supplier_id VARCHAR(24) PRIMARY KEY,
+      name TEXT,
+      country VARCHAR(3),
+      page_status TEXT,
+      login BOOLEAN,
+      automatic_priority FLOAT,
+      alias TEXT,
+      date TIMESTAMP,
+      priority FLOAT,
+      currency TEXT
+    );
+
+  sonar_runs: >
+    CREATE TABLE IF NOT EXISTS silver.sonar_runs (
+      sonar_run_id VARCHAR(24) PRIMARY KEY,
+      client_id VARCHAR(24),
+      supplier_ids TEXT[],
+      countries TEXT[],
+      client_part_ids TEXT[],
+      status TEXT,
+      category TEXT,
+      sonar_run_time TIMESTAMP,
+      sonar_run_date TIMESTAMP,
+      FOREIGN KEY (client_id) REFERENCES silver.clients(client_id)
+    );
+
+  sonar_results: >
+    CREATE TABLE IF NOT EXISTS silver.sonar_results (
+      sonar_result_id VARCHAR(24) PRIMARY KEY,
+      supplier_id VARCHAR(24),
+      sonar_run_id VARCHAR(24),
+      part_id VARCHAR(24),
+      date_sonar TIMESTAMP,
+      date_found TIMESTAMP,
+      price_norm FLOAT,
+      currency TEXT,
+      unit TEXT,
+      country TEXT,
+      status TEXT,
+      FOREIGN KEY (supplier_id) REFERENCES silver.suppliers(supplier_id),
+      FOREIGN KEY (sonar_run_id) REFERENCES silver.sonar_runs(sonar_run_id)
+    );
+
+output_column_names:
+  clients: ["client_id", "name", "contract_start_date", "contract_end_date", "sonar_dates", "suppliers"]
+  supplier_group: ["group_name", "supplier_id", "client_id"]
+  suppliers: ["supplier_id", "name", "country", "page_status", "login", "automatic_priority", "alias", "date", "priority", "currency"]
+  sonar_runs: ["sonar_run_id", "client_id", "countries", "client_part_ids", "status", "category", "sonar_run_time", "sonar_run_date"]
+  sonar_results: ["sonar_result_id", "supplier_id", "sonar_run_id", "part_id", "date_sonar", "date_found", "price_norm", "currency", "unit", "country", "status"]
+
+
+input_column_names:
+  clients: ["_id", "name", "contract_start", "contract_end", "sonar_dates", "suppliers"]
+  supplier_group: ["supplier_groups", "_id"]
+  suppliers: ["_id", "name", "country", "page_status", "login", "automatic_priority", "alias", "date", "priority", "currency"]
+  sonar_runs: ["_id", "client_id", "countries", "client_part_ids", "status", "category", "time", "date"]
+  sonar_results: ["_id", "supplier_id", "sonar_run_id", "part_id", "date_sonar", "date_found", "price_norm", "currency", "unit", "country", "status"]
+

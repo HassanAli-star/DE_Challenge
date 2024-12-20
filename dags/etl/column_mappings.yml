@@ -1,0 +1,135 @@
+column_mappings:
+  clients:
+    rename:
+      "contract_start.$date": "contract_start_date"
+      "contract_end.$date": "contract_end_date"
+      "_id.$oid": "client_id"
+      "sonar_run_id.$oid": "sonar_run_id"
+    select: "['client_id', 'name', 'contract_start_date', 'contract_end_date', 'sonar_dates', 'suppliers']"
+
+  supplier_group:
+    rename:
+      "_id": "client_id"
+
+  suppliers:
+    rename:
+      "_id.$oid": "supplier_id"
+      "client_id.$oid": "client_id"
+    select: "['supplier_id', 'name', 'country', 'page_status', 'login', 'automatic_priority', 'alias', 'date', 'priority', 'currency']"
+
+  sonar_runs:
+    rename:
+      "_id.$oid": "sonar_run_id"
+      "client_id.$oid": "client_id"
+      "time.$date": "sonar_run_time"
+      "date.$date": "sonar_run_date"
+    select: "['sonar_run_id', 'client_id', 'countries', 'supplier_ids', 'client_part_ids', 'status', 'category', 'sonar_run_time', 'sonar_run_date']"
+
+  sonar_results:
+    rename:
+      "_id.$oid": "sonar_result_id"
+      "supplier_id.$oid": "supplier_id"
+      "sonar_run_id.$oid": "sonar_run_id"
+      "part_id.$oid": "part_id"
+      "date_sonar.$date": "date_sonar"
+      "date_found.$date": "date_found"
+    select: "['sonar_result_id', 'supplier_id', 'sonar_run_id', 'part_id', 'date_sonar', 'date_found', 'price_norm', 'currency', 'unit', 'country', 'status']"
+
+schema_definitions:
+  clients:
+    - name: client_id
+      type: varchar
+      length: 24
+    - name: name
+      type: text
+    - name: contract_start_date
+      type: timestamp
+    - name: contract_end_date
+      type: timestamp
+    - name: sonar_dates
+      type: text[]
+    - name: suppliers
+      type: text[]
+
+  supplier_group:
+    - name: group_name
+      type: varchar
+      length: 3
+    - name: supplier_id
+      type: varchar
+      length: 24
+    - name: client_id
+      type: varchar
+      length: 24
+
+  suppliers:
+    - name: supplier_id
+      type: varchar
+      length: 24
+    - name: name
+      type: text
+    - name: country
+      type: varchar
+      length: 3
+    - name: page_status
+      type: text
+    - name: login
+      type: boolean
+    - name: automatic_priority
+      type: float
+    - name: alias
+      type: text
+    - name: date
+      type: timestamp
+    - name: priority
+      type: float
+    - name: currency
+      type: text
+
+  sonar_runs:
+    - name: sonar_run_id
+      type: varchar
+      length: 24
+    - name: client_id
+      type: varchar
+      length: 24
+    - name: countries
+      type: text[]
+    - name: client_part_ids
+      type: text[]
+    - name: status
+      type: text
+    - name: category
+      type: text
+    - name: sonar_run_time
+      type: timestamp
+    - name: sonar_run_date
+      type: timestamp
+
+  sonar_results:
+    - name: sonar_result_id
+      type: varchar
+      length: 24
+    - name: supplier_id
+      type: varchar
+      length: 24
+    - name: sonar_run_id
+      type: varchar
+      length: 24
+    - name: part_id
+      type: varchar
+      length: 24
+    - name: date_sonar
+      type: timestamp
+    - name: date_found
+      type: timestamp
+    - name: price_norm
+      type: float
+    - name: currency
+      type: text
+    - name: unit
+      type: text
+    - name: country
+      type: text
+    - name: status
+      type: text
