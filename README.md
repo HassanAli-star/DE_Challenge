@@ -109,7 +109,7 @@ Set up PostgreSQL and ensure the credentials are added in `config.yaml` accordin
 
 1. **Clone the Repository**:
    ```bash
-   git clone /path/to/bundle.file
+   git clone -b main /path/to/bundle.file </path/to/unbundle>
    cd DE_Challenge
    ```
 
